@@ -5,8 +5,8 @@ function generatePost(overrides?: Partial<Post>): Post {
   const id = faker.string.uuid();
   const title = faker.lorem.sentence({ min: 4, max: 9 });
   const slug = faker.helpers.slugify(title.toLowerCase());
-  const coverImage = null;
-  // Math.random() > 0.3 ? `https://picsum.photos/seed/${slug}/1200/628` : null;
+  const coverImage =
+    Math.random() > 0.3 ? `https://picsum.photos/seed/${slug}/1200/628` : null;
   const tags = faker.helpers.arrayElements(
     ["Next.js", "React", "TypeScript", "DevLog", "Career", "Infra"],
     { min: 1, max: 3 }
