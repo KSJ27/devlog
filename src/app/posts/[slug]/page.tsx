@@ -35,7 +35,10 @@ export default async function Post({
         {new Date(post.date).toLocaleDateString("ko-KR")}
         {post.metadata.readingTime}분 읽기
       </p>
-      <MDXContent code={post.content} />
+      <div
+        className="prose dark:prose-invert"
+        dangerouslySetInnerHTML={{ __html: post.content }}
+      />
     </article>
   );
 }

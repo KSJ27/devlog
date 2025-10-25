@@ -7,18 +7,7 @@ cover: cover.png
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse
 
-```tsx
-export const runtime = "edge";
-
-import Image from "next/image";
-import { notFound } from "next/navigation";
-import { posts } from "v";
-import { MDXContent } from "@/components/common/MDXContent";
-
-function getPostBySlug(slug: string) {
-  return posts.find((post) => post.slug === slug);
-}
-
+```tsx title="page.tsx"
 export default async function Post({
   params,
 }: {

@@ -1,12 +1,14 @@
+import rehypeShiki from "@shikijs/rehype";
 import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
 import { defineConfig, s } from "velite";
+import transformerCopyButton from "@/lib/transformerCopyButton";
 
 export default defineConfig({
   collections: {
     posts: {
       name: "Post", // collection type name
-      pattern: "posts/**/*.mdx", // content files glob pattern
+      pattern: "posts/**/*.md", // content files glob pattern
       schema: s
         .object({
           title: s.string().max(99), // Zod primitive type
@@ -17,13 +19,14 @@ export default defineConfig({
           metadata: s.metadata(), // extract markdown reading-time and word-count.
           excerpt: s.excerpt(), // excerpt of markdown content
           tags: s.array(s.string()).optional(),
-          content: s.mdx({
+          content: s.markdown({
             remarkPlugins: [remarkGfm], // 체크박스/테이블 등 GFM
             rehypePlugins: [
               [
-                rehypePrettyCode,
+                rehypeShiki as any,
                 {
-                  theme: "github-dark",
+                  theme: "one-dark-pro",
+                  transformers: [transformerCopyButton()],
                 },
               ],
             ],
