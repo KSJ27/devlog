@@ -4,19 +4,26 @@ import ModeToggle from "./ModeToggle";
 function AppHeader() {
   return (
     <header className="sticky top-0 z-10 flex w-full items-center justify-center border-b bg-background">
-      <div className="flex w-full max-w-[1328px] items-center justify-between px-6 py-3">
-        <nav className="flex flex-row items-center justify-between gap-8">
+      <div className="flex w-full max-w-5xl items-center justify-between gap-10 px-4 py-2">
+        <Link
+          href="/"
+          className="font-semibold text-2xl text-foreground transition-all"
+        >
+          Seokjun's blog
+        </Link>
+
+        <nav className="flex flex-1 flex-row items-end justify-start gap-8">
           <Link
-            href="/"
-            className="font-semibold text-muted-foreground text-xl transition-all hover:text-foreground"
+            href="/posts"
+            className="font-semibold text-lg text-muted-foreground transition-all hover:text-foreground"
           >
-            Home
+            작성글
           </Link>
           <Link
-            href="/blog"
-            className="font-semibold text-muted-foreground text-xl transition-all hover:text-foreground"
+            href="/tags"
+            className="font-semibold text-lg text-muted-foreground transition-all hover:text-foreground"
           >
-            blog
+            태그
           </Link>
         </nav>
         <ModeToggle />

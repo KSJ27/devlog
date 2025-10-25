@@ -7,7 +7,7 @@ function PostCard({ post }: { post: any }) {
   return (
     <li className="flex items-center justify-center py-6">
       <Link
-        href={`/blog/${slug}`}
+        href={`/posts/${slug}`}
         className="flex h-[156px] w-[680px] flex-col items-center justify-between gap-4"
       >
         <div className="flex w-full flex-row items-start justify-between gap-16">

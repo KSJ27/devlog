@@ -24,7 +24,11 @@ export default defineConfig({
             .filter(Boolean);
           // 중복 제거:
           const uniqueTags = Array.from(new Set(cleanedTags));
-          return { ...data, tags: uniqueTags, permalink: `/blog/${data.slug}` };
+          return {
+            ...data,
+            tags: uniqueTags,
+            permalink: `/posts/${data.slug}`,
+          };
         }),
     },
   },

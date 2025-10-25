@@ -1,7 +1,7 @@
 import { PostCard } from "@/components/common/PostCard";
 import { posts } from "../../../.velite";
 
-export default async function Blog() {
+export default async function Posts() {
   return (
     <main className="container">
       <ul className="flex flex-col divide-y divide-border">

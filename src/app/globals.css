@@ -159,9 +159,11 @@ body {
 
   .container {
     width: 100%;
-    max-width: 1328px;
+    max-width: 1024px;
     justify-items: center;
 
     flex: 1;
+
+    padding: 0 16px;
   }
 }
