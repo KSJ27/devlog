@@ -2,7 +2,7 @@ export const runtime = "edge";
 
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { posts } from "../../../../.velite";
+import { posts } from "v";
 
 interface PostProps {
   params: {

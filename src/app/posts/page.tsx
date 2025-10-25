@@ -1,5 +1,5 @@
+import { posts } from "v";
 import { PostCard } from "@/components/common/PostCard";
-import { posts } from "../../../.velite";
 
 export default async function Posts() {
   return (
