@@ -17,7 +17,6 @@ export default function ModeToggle() {
       variant="ghost"
       size="icon"
       onClick={handleClick}
-      className="hover:cursor-pointer"
       title="테마 변경하기"
     >
       <Sun className="dark:-rotate-90 size-6 rotate-0 scale-100 transition-all dark:scale-0" />

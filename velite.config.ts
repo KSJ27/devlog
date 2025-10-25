@@ -1,10 +1,13 @@
+import readingTime from "reading-time";
+import rehypePrettyCode from "rehype-pretty-code";
+import remarkGfm from "remark-gfm";
 import { defineConfig, s } from "velite";
 
 export default defineConfig({
   collections: {
     posts: {
       name: "Post", // collection type name
-      pattern: "posts/**/*.md", // content files glob pattern
+      pattern: "posts/**/*.mdx", // content files glob pattern
       schema: s
         .object({
           title: s.string().max(99), // Zod primitive type
@@ -15,7 +18,18 @@ export default defineConfig({
           metadata: s.metadata(), // extract markdown reading-time and word-count.
           excerpt: s.excerpt(), // excerpt of markdown content
           tags: s.array(s.string()).optional(),
-          content: s.markdown(), // transform markdown to html
+          content: s.mdx({
+            remarkPlugins: [remarkGfm], // 체크박스/테이블 등 GFM
+            rehypePlugins: [
+              [
+                rehypePrettyCode,
+                {
+                  // 코드 하이라이트
+                  theme: "github-dark",
+                },
+              ],
+            ],
+          }), // transform markdown to html
         })
         // more additional fields (computed fields)
         .transform((data) => {

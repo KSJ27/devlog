@@ -6,7 +6,7 @@ export interface Post {
   video?: string | typeof File; // string public path or richer FileField
   metadata: { readingTime: number; wordCount: number };
   excerpt?: string;
-  content: string; // HTML
+  content: any; // HTML
   // computed by velite transform in velite.config.ts
   permalink: string;
 }
