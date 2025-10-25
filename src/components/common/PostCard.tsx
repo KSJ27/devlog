@@ -1,12 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { Post } from "@/types";
 
-function PostCard({ post }: { post: Post }) {
-  const { id, slug, title, excerpt, coverImage, publishedAt } = post;
+function PostCard({ post }: { post: any }) {
+  const { slug, title, excerpt, cover, date } = post;
 
   return (
-    <li key={id} className="flex items-center justify-center py-6">
+    <li className="flex items-center justify-center py-6">
       <Link
         href={`/blog/${slug}`}
         className="flex h-[156px] w-[680px] flex-col items-center justify-between gap-4"
@@ -16,9 +15,9 @@ function PostCard({ post }: { post: Post }) {
             <h2 className="font-bold text-2xl">{title}</h2>
             <p className="line-clamp-2 text-muted-foreground">{excerpt}</p>
           </div>
-          {coverImage ? (
+          {cover ? (
             <Image
-              src={coverImage}
+              src={cover}
               alt="hello"
               width={720}
               height={480}
@@ -29,7 +28,7 @@ function PostCard({ post }: { post: Post }) {
 
         <div className="flex w-full flex-row items-center justify-between">
           <div className="text-muted-foreground text-sm">
-            {new Date(publishedAt).toLocaleDateString("ko-KR")}
+            {new Date(date).toLocaleDateString("ko-KR")}
           </div>
           <div className="text-muted-foreground text-sm">뭐가 올까</div>
         </div>

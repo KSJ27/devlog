@@ -1,22 +1,29 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { getPost } from "@/api/posts";
+import { posts } from "../../../../.velite";
 
-export default async function BlogDetail({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const { slug } = await params;
-  const post = await getPost(slug);
-  if (!post) return notFound();
+interface PostProps {
+  params: {
+    slug: string;
+  };
+}
+
+function getPostBySlug(slug: string) {
+  console.log(slug);
+  return posts.find((post) => post.slug === slug);
+}
+
+export default async function PostPage({ params }: PostProps) {
+  const slug = (await params).slug;
+  const post = getPostBySlug(slug);
+  if (post == null) notFound();
 
   return (
     <article className="container">
       <h1>{post.title}</h1>
-      {post.coverImage && (
+      {post.cover && (
         <Image
-          src={post.coverImage}
+          src={post.cover}
           alt={post.title}
           width={100}
           height={100}
@@ -24,8 +31,8 @@ export default async function BlogDetail({
         />
       )}
       <p className="mt-2 text-muted-foreground">
-        {new Date(post.publishedAt).toLocaleDateString("ko-KR")}
-        {post.readingTime}분 읽기
+        {new Date(post.date).toLocaleDateString("ko-KR")}
+        {post.metadata.readingTime}분 읽기
       </p>
       <div className="mt-8 whitespace-pre-line">{post.content}</div>
     </article>
