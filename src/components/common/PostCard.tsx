@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Post } from "v";
 
-function PostCard({ post }: { post: any }) {
+function PostCard({ post }: { post: Post }) {
   const { slug, title, excerpt, cover, date } = post;
 
   return (
