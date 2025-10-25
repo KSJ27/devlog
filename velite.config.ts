@@ -1,4 +1,3 @@
-import readingTime from "reading-time";
 import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
 import { defineConfig, s } from "velite";
@@ -24,7 +23,6 @@ export default defineConfig({
               [
                 rehypePrettyCode,
                 {
-                  // 코드 하이라이트
                   theme: "github-dark",
                 },
               ],
@@ -33,11 +31,12 @@ export default defineConfig({
         })
         // more additional fields (computed fields)
         .transform((data) => {
+          // Trim tags
           const cleanedTags = (data.tags ?? [])
             .map((t) => String(t).trim().toLowerCase())
             .filter(Boolean);
-          // 중복 제거:
           const uniqueTags = Array.from(new Set(cleanedTags));
+
           return {
             ...data,
             tags: uniqueTags,

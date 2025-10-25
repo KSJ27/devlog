@@ -16,7 +16,7 @@ interface MDXProps {
 }
 
 // MDXContent component
-export const MDXContent = ({ code }: MDXProps) => {
+export const MDXContent = ({ code, components }: MDXProps) => {
   const Component = useMDXComponent(code);
-  return <Component components={{ ...sharedComponents }} />;
+  return <Component components={{ ...sharedComponents, ...components }} />;
 };
