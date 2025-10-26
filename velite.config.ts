@@ -1,8 +1,7 @@
-import rehypeShiki from "@shikijs/rehype";
+import { transformerCopyButton } from "@rehype-pretty/transformers";
 import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
 import { defineConfig, s } from "velite";
-import transformerCopyButton from "@/lib/transformerCopyButton";
 
 export default defineConfig({
   collections: {
@@ -23,10 +22,18 @@ export default defineConfig({
             remarkPlugins: [remarkGfm], // 체크박스/테이블 등 GFM
             rehypePlugins: [
               [
-                rehypeShiki as any,
+                rehypePrettyCode,
                 {
-                  theme: "one-dark-pro",
-                  transformers: [transformerCopyButton()],
+                  theme: {
+                    light: "github-light",
+                    dark: "github-dark-dimmed",
+                  },
+                  transformers: [
+                    transformerCopyButton({
+                      visibility: "always",
+                      feedbackDuration: 1_000,
+                    }),
+                  ],
                 },
               ],
             ],

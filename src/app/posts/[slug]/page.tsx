@@ -3,7 +3,6 @@ export const runtime = "edge";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { posts } from "v";
-import { MDXContent } from "@/components/common/MDXContent";
 
 function getPostBySlug(slug: string) {
   return posts.find((post) => post.slug === slug);
@@ -37,6 +36,7 @@ export default async function Post({
       </p>
       <div
         className="prose dark:prose-invert"
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: for rendering markdown contents
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
     </article>
