@@ -89,32 +89,42 @@ export function TableOfContents({
   return (
     <nav
       aria-label="Table of contents"
-      className={clsx(
-        "text-sm",
-        "[&_a]:block [&_a]:truncate [&_a]:text-muted-foreground hover:[&_a]:text-foreground",
-        className,
-      )}
+      className={clsx("text-sm", "[&_a]:block [&_a]:truncate", className)}
     >
       <ul className="space-y-1">
-        {grouped.map((item) => (
-          <li key={item.id} className={indentClass(item.level)}>
-            <a
-              href={`#${item.id}`}
+        {grouped.map((item) => {
+          const isActive = activeId === item.id;
+          return (
+            <li
+              key={item.id}
               className={clsx(
-                "transition-colors",
-                activeId === item.id ? "text-foreground" : undefined,
+                indentClass(item.level),
+                "pl-3",
+                isActive && "border-foreground border-l-2",
               )}
-              onClick={(e) => {
-                e.preventDefault();
-                const target = document.getElementById(item.id);
-                target?.scrollIntoView({ behavior: "smooth", block: "start" });
-                history.pushState(null, "", `#${item.id}`);
-              }}
             >
-              {item.text}
-            </a>
-          </li>
-        ))}
+              <a
+                href={`#${item.id}`}
+                aria-current={isActive ? "true" : undefined}
+                className={clsx(
+                  "text-muted-foreground transition-colors hover:text-foreground",
+                  isActive && "font-bold text-foreground",
+                )}
+                onClick={(e) => {
+                  e.preventDefault();
+                  const target = document.getElementById(item.id);
+                  target?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+                  history.pushState(null, "", `#${item.id}`);
+                }}
+              >
+                {item.text}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );
