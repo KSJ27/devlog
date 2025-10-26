@@ -1,4 +1,6 @@
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
+import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import { defineConfig, s } from "velite";
 import { transformerCopyButton } from "@/lib/copy-button";
@@ -21,6 +23,16 @@ export default defineConfig({
           content: s.markdown({
             remarkPlugins: [remarkGfm], // 체크박스/테이블 등 GFM
             rehypePlugins: [
+              rehypeSlug, // 제목에 고유 ID 추가
+              [
+                rehypeAutolinkHeadings,
+                {
+                  behavior: "wrap",
+                  properties: {
+                    class: "heading-anchor",
+                  },
+                },
+              ],
               [
                 rehypePrettyCode,
                 {
