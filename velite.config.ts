@@ -1,7 +1,7 @@
-import { transformerCopyButton } from "@rehype-pretty/transformers";
 import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
 import { defineConfig, s } from "velite";
+import { transformerCopyButton } from "@/lib/copy-button";
 
 export default defineConfig({
   collections: {
@@ -30,7 +30,7 @@ export default defineConfig({
                   },
                   transformers: [
                     transformerCopyButton({
-                      visibility: "always",
+                      visibility: "hover",
                       feedbackDuration: 1_000,
                     }),
                   ],

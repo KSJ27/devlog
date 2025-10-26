@@ -10,9 +10,7 @@
     "format": "biome format --write"
   },
   "dependencies": {
-    "@opennextjs/cloudflare": "^1.11.0",
     "@radix-ui/react-slot": "^1.2.3",
-    "@rehype-pretty/transformers": "^0.13.2",
     "@shikijs/rehype": "^3.13.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
