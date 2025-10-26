@@ -71,7 +71,7 @@ export function TableOfContents({
       {
         rootMargin: "-64px 0px -60% 0px",
         threshold: [0.1, 0.5, 1],
-      }
+      },
     );
 
     for (const h of headings) observer.observe(h);
@@ -92,7 +92,7 @@ export function TableOfContents({
       className={clsx(
         "text-sm",
         "[&_a]:block [&_a]:truncate [&_a]:text-muted-foreground hover:[&_a]:text-foreground",
-        className
+        className,
       )}
     >
       <ul className="space-y-1">
@@ -102,7 +102,7 @@ export function TableOfContents({
               href={`#${item.id}`}
               className={clsx(
                 "transition-colors",
-                activeId === item.id ? "text-foreground" : undefined
+                activeId === item.id ? "text-foreground" : undefined,
               )}
               onClick={(e) => {
                 e.preventDefault();

@@ -45,7 +45,7 @@ export function transformerCopyButton(
   options: CopyButtonOptions = {
     visibility: "hover",
     feedbackDuration: 3_000,
-  }
+  },
 ): ShikiTransformer {
   return {
     name: "@rehype-pretty/transformers/copy-button",
