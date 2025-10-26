@@ -1,18 +1,9 @@
 "use client";
-
 import clsx from "clsx";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-type TocItem = {
-  id: string;
-  text: string;
-  level: number; // 2 for h2, 3 for h3, 4 for h4
-};
-
-export type TableOfContentsProps = {
-  /** CSS selector of the container that includes article headings */
+type TableOfContentsProps = {
   containerSelector?: string;
-  /** Heading levels to include */
   minLevel?: 2 | 3;
   maxLevel?: 3 | 4;
   className?: string;
@@ -24,67 +15,58 @@ export function TableOfContents({
   maxLevel = 4,
   className,
 }: TableOfContentsProps) {
-  const [items, setItems] = useState<TocItem[]>([]);
-  const [activeId, setActiveId] = useState<string>("");
+  const [activeId, setActiveId] = useState("");
+  const [isHeadingsLoaded, setIsHeadingsLoaded] = useState(false);
+  const headingsRef = useRef<HTMLElement[]>([]);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
-    const root = document.querySelector(containerSelector) ?? undefined;
+    const root = document.querySelector(containerSelector);
     if (!root) return;
 
-    const selector = [2, 3, 4]
-      .filter((lvl) => lvl >= minLevel && lvl <= maxLevel)
-      .map((lvl) => `h${lvl}`)
+    const selector = [1, 2, 3, 4, 5, 6]
+      .filter((level) => level >= minLevel && level <= maxLevel)
+      .map((level) => `h${level}`)
       .join(",");
 
-    const headings = Array.from(root.querySelectorAll<HTMLElement>(selector));
+    const heads = Array.from(root.querySelectorAll<HTMLElement>(selector))
+      .filter((el) => el.id && (el.textContent ?? "").trim().length > 0);
 
-    const nextItems: TocItem[] = headings
-      .filter((el) => !!el.id)
-      .map((el) => ({
-        id: el.id,
-        text: el.textContent?.trim() ?? "",
-        level: Number(el.tagName.substring(1)) as 2 | 3 | 4,
-      }))
-      .filter((it) => it.text.length > 0);
+    headingsRef.current = heads;
+    setIsHeadingsLoaded(true); 
+  }, [containerSelector, minLevel, maxLevel]);
 
-    setItems(nextItems);
+  useEffect(() => {
+    if (!isHeadingsLoaded || headingsRef.current.length === 0) return;
 
-    // Observe headings for active state
     observerRef.current?.disconnect();
+
     const observer = new IntersectionObserver(
       (entries) => {
-        // Choose the most visible entry above threshold
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
         if (visible[0]?.target instanceof HTMLElement) {
           setActiveId(visible[0].target.id);
-        } else {
-          // Fallback: find the last heading above viewport
-          const fromTop = headings
-            .filter((h) => h.getBoundingClientRect().top <= 80)
-            .at(-1);
-          if (fromTop?.id) setActiveId(fromTop.id);
         }
       },
       {
-        rootMargin: "-64px 0px -60% 0px",
-        threshold: [0.1, 0.5, 1],
+        root: null,
+        rootMargin: "0px 0px -60% 0px",
+        threshold: [1.0],
       },
     );
 
-    for (const h of headings) observer.observe(h);
+    headingsRef.current.forEach((h) => {
+      observer.observe(h);
+    });
     observerRef.current = observer;
 
     return () => observer.disconnect();
-  }, [containerSelector, minLevel, maxLevel]);
+  }, [isHeadingsLoaded]);
 
-  const hasItems = items.length > 0;
-
-  const grouped = useMemo(() => items, [items]);
-
-  if (!hasItems) return null;
+  if (!isHeadingsLoaded || headingsRef.current.length === 0) return null;
 
   return (
     <nav
@@ -92,19 +74,19 @@ export function TableOfContents({
       className={clsx("text-sm", "[&_a]:block [&_a]:truncate", className)}
     >
       <ul className="space-y-1">
-        {grouped.map((item) => {
-          const isActive = activeId === item.id;
+        {headingsRef.current.map((h) => {
+          const isActive = activeId === h.id;
           return (
             <li
-              key={item.id}
+              key={h.id}
               className={clsx(
-                indentClass(item.level),
+                indentClass(h.tagName),
                 "pl-3",
                 isActive && "border-foreground border-l-2",
               )}
             >
               <a
-                href={`#${item.id}`}
+                href={`#${h.id}`}
                 aria-current={isActive ? "true" : undefined}
                 className={clsx(
                   "text-muted-foreground transition-colors hover:text-foreground",
@@ -112,15 +94,14 @@ export function TableOfContents({
                 )}
                 onClick={(e) => {
                   e.preventDefault();
-                  const target = document.getElementById(item.id);
-                  target?.scrollIntoView({
+                  document.getElementById(h.id)?.scrollIntoView({
                     behavior: "smooth",
                     block: "start",
                   });
-                  history.pushState(null, "", `#${item.id}`);
+                  history.pushState(null, "", `#${h.id}`);
                 }}
               >
-                {item.text}
+                {(h.textContent ?? "").trim()}
               </a>
             </li>
           );
@@ -130,11 +111,11 @@ export function TableOfContents({
   );
 }
 
-function indentClass(level: number) {
-  switch (level) {
-    case 2:
+function indentClass(tagName: string) {
+  switch (tagName.toLowerCase()) {
+    case "h2":
       return "pl-0";
-    case 3:
+    case "h3":
       return "pl-4";
     default:
       return "pl-8";
