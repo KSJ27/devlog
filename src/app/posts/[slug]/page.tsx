@@ -4,6 +4,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { posts } from "v";
 import { TableOfContents } from "@/components/common";
+import Content from "@/components/common/Content";
 
 function getPostBySlug(slug: string) {
   return posts.find((post) => post.slug === slug);
@@ -21,7 +22,7 @@ export default async function Post({
 
   return (
     <article className="container">
-      <header className="mb-8">
+      <div className="mb-8">
         <h1>{post.title}</h1>
         {post.cover && (
           <Image
@@ -36,15 +37,10 @@ export default async function Post({
           {new Date(post.date).toLocaleDateString("ko-KR")} ·{" "}
           {post.metadata.readingTime}분 읽기
         </p>
-      </header>
+      </div>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_280px]">
-        <div
-          id="post-content"
-          className="prose dark:prose-invert"
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: rendering trusted, pre-sanitized markdown HTML
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
+        <Content content={post.content} />
 
         <aside className="hidden lg:block">
           <div className="sticky top-24 max-h-[calc(100vh-6rem)] overflow-auto py-2">

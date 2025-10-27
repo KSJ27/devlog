@@ -83,7 +83,7 @@ export function TableOfContents({
               className={clsx(
                 indentClass(h.tagName),
                 "pl-3",
-                isActive && "border-foreground border-l-2",
+                isActive && "border-primary border-l-2",
               )}
             >
               <a
@@ -91,7 +91,7 @@ export function TableOfContents({
                 aria-current={isActive ? "true" : undefined}
                 className={clsx(
                   "text-muted-foreground transition-colors hover:text-foreground",
-                  isActive && "font-bold text-foreground",
+                  isActive && "font-bold text-primary",
                 )}
                 onClick={(e) => {
                   e.preventDefault();

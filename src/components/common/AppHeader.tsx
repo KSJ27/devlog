@@ -16,13 +16,13 @@ function AppHeader() {
           <nav className="flex h-full flex-1 flex-row items-stretch justify-start gap-2">
             <Link
               href="/posts"
-              className="flex items-center justify-center px-3 font-semibold text-lg text-muted-foreground transition-all hover:bg-accent hover:text-foreground"
+              className="flex items-center justify-center px-3 font-semibold text-lg text-muted-foreground transition-all hover:bg-accent hover:text-primary"
             >
               작성글
             </Link>
             <Link
               href="/tags"
-              className="flex items-center justify-center px-3 font-semibold text-lg text-muted-foreground transition-all hover:bg-accent hover:text-foreground"
+              className="flex items-center justify-center px-3 font-semibold text-lg text-muted-foreground transition-all hover:bg-accent hover:text-primary"
             >
               태그
             </Link>
