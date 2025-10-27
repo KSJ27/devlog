@@ -1,16 +1,7 @@
 import type { Metadata } from "next";
-import { Noto_Sans, Noto_Sans_Mono } from "next/font/google";
 import "./globals.css";
 import { AppHeader } from "@/components/common";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
-
-const NotoSans = Noto_Sans({
-  variable: "--font-noto-sans",
-});
-
-const NotoSansMono = Noto_Sans_Mono({
-  variable: "--font-noto-sans-mono",
-});
 
 export const metadata: Metadata = {
   title: "Seokjun.dev",
@@ -24,9 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body
-        className={`${NotoSans.variable} ${NotoSansMono.variable} page antialiased`}
-      >
+      <body className="page antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

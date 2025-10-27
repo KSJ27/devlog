@@ -12,21 +12,21 @@ function AppHeader() {
           Seokjun's blog
         </Link>
 
-          <nav className="hidden h-full flex-1 flex-row items-stretch justify-start gap-2 sm:flex">
-            <Link
-              href="/posts"
-              className="flex items-center justify-center px-3 font-semibold text-lg text-muted-foreground transition-all hover:bg-accent hover:text-primary"
-            >
-              작성글
-            </Link>
-            <Link
-              href="/tags"
-              className="flex items-center justify-center px-3 font-semibold text-lg text-muted-foreground transition-all hover:bg-accent hover:text-primary"
-            >
-              태그
-            </Link>
-          </nav>
-          <ModeToggle />
+        <nav className="hidden h-full flex-1 flex-row items-stretch justify-start gap-2 sm:flex">
+          <Link
+            href="/posts"
+            className="flex items-center justify-center px-3 font-semibold text-lg text-muted-foreground transition-all hover:bg-accent hover:text-primary"
+          >
+            작성글
+          </Link>
+          <Link
+            href="/tags"
+            className="flex items-center justify-center px-3 font-semibold text-lg text-muted-foreground transition-all hover:bg-accent hover:text-primary"
+          >
+            태그
+          </Link>
+        </nav>
+        <ModeToggle />
       </div>
     </header>
   );
