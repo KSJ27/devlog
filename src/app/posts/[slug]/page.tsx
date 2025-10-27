@@ -1,20 +1,29 @@
 export const runtime = "edge";
 
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { posts } from "v";
 import { TableOfContents } from "@/components/common";
 import Content from "@/components/common/Content";
 import { Badge } from "@/components/ui/badge";
 
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const slug = (await params).slug;
+
+  return {
+    title: slug,
+  };
+}
+
 function getPostBySlug(slug: string) {
   return posts.find((post) => post.slug === slug);
 }
 
-export default async function Post({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function Post({ params }: Props) {
   const slug = (await params).slug;
   const post = getPostBySlug(slug);
 
