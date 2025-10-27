@@ -22,7 +22,7 @@ export default async function Post({
 
   return (
     <main className="container relative my-8">
-      <article className="relative">
+      <article className="w-full">
         <h1 className="font-bold text-3xl">{post.title}</h1>
         <p className="mt-2 text-muted-foreground">
           {new Date(post.date).toLocaleDateString("ko-KR")}
@@ -38,8 +38,8 @@ export default async function Post({
         </ul>
         <Content content={post.content} />
       </article>
-      <aside className="-right-40 pointer-events-none absolute inset-y-0 top-0 hidden xl:block">
-        <div className="pointer-events-auto sticky top-22 w-40">
+      <aside className="-right-60 pointer-events-none absolute inset-y-0 top-0 hidden xl:block">
+        <div className="pointer-events-auto sticky top-23 w-60">
           <TableOfContents />
         </div>
       </aside>

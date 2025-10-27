@@ -12,8 +12,7 @@ function AppHeader() {
           Seokjun's blog
         </Link>
 
-        <div className="flex h-full flex-1 flex-row items-center justify-between">
-          <nav className="flex h-full flex-1 flex-row items-stretch justify-start gap-2">
+          <nav className="hidden h-full flex-1 flex-row items-stretch justify-start gap-2 sm:flex">
             <Link
               href="/posts"
               className="flex items-center justify-center px-3 font-semibold text-lg text-muted-foreground transition-all hover:bg-accent hover:text-primary"
@@ -28,7 +27,6 @@ function AppHeader() {
             </Link>
           </nav>
           <ModeToggle />
-        </div>
       </div>
     </header>
   );
