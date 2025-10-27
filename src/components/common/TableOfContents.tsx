@@ -54,7 +54,7 @@ export function TableOfContents({
       },
       {
         root: null,
-        rootMargin: "0px 0px -60% 0px",
+        rootMargin: "0px 0px -50% 0px",
         threshold: [1.0],
       },
     );
@@ -82,7 +82,6 @@ export function TableOfContents({
               key={h.id}
               className={clsx(
                 indentClass(h.tagName),
-                "pl-3",
                 isActive && "border-primary border-l-2",
               )}
             >
@@ -115,10 +114,16 @@ export function TableOfContents({
 function indentClass(tagName: string) {
   switch (tagName.toLowerCase()) {
     case "h2":
-      return "pl-0";
-    case "h3":
       return "pl-4";
-    default:
+    case "h3":
       return "pl-8";
+    case "h4":
+      return "pl-12";
+    case "h5":
+      return "pl-16";
+    case "h6":
+      return "pl-18";
+    default:
+      return "pl-4";
   }
 }

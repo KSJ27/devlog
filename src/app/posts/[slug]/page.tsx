@@ -1,10 +1,10 @@
 export const runtime = "edge";
 
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { posts } from "v";
 import { TableOfContents } from "@/components/common";
 import Content from "@/components/common/Content";
+import { Badge } from "@/components/ui/badge";
 
 function getPostBySlug(slug: string) {
   return posts.find((post) => post.slug === slug);
@@ -21,33 +21,28 @@ export default async function Post({
   if (post == null) notFound();
 
   return (
-    <article className="container">
-      <div className="mb-8">
-        <h1>{post.title}</h1>
-        {post.cover && (
-          <Image
-            src={post.cover}
-            alt={post.title}
-            width={100}
-            height={100}
-            className="mt-4 rounded-lg"
-          />
-        )}
+    <main className="container relative my-8">
+      <article className="relative">
+        <h1 className="font-bold text-3xl">{post.title}</h1>
         <p className="mt-2 text-muted-foreground">
-          {new Date(post.date).toLocaleDateString("ko-KR")} ·{" "}
-          {post.metadata.readingTime}분 읽기
+          {new Date(post.date).toLocaleDateString("ko-KR")}
         </p>
-      </div>
-
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_280px]">
+        <ul className="mt-2 flex flex-wrap items-center gap-2">
+          {post.tags.map((tag) => (
+            <li key={tag}>
+              <Badge variant="outline" className="select-none bg-secondary">
+                {tag}
+              </Badge>
+            </li>
+          ))}
+        </ul>
         <Content content={post.content} />
-
-        <aside className="hidden lg:block">
-          <div className="sticky top-24 max-h-[calc(100vh-6rem)] overflow-auto py-2">
-            <TableOfContents />
-          </div>
-        </aside>
-      </div>
-    </article>
+      </article>
+      <aside className="-right-40 pointer-events-none absolute inset-y-0 top-0 hidden xl:block">
+        <div className="pointer-events-auto sticky top-22 w-40">
+          <TableOfContents />
+        </div>
+      </aside>
+    </main>
   );
 }
