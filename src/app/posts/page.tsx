@@ -1,4 +1,4 @@
-import { posts } from "v";
+import { posts } from "#site/content";
 import { PostCard } from "@/components/common/PostCard";
 
 export default async function Posts() {

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { Post } from "v";
+import type { Post } from "#site/content";
 
 function PostCard({ post }: { post: Post }) {
   const { slug, title, excerpt, cover, date } = post;
@@ -22,7 +22,7 @@ function PostCard({ post }: { post: Post }) {
               alt="hello"
               width={720}
               height={480}
-              className="h-[120px] w-[180px]"
+              className="h-[120px] w-[180px] rounded-xl"
             />
           ) : null}
         </div>

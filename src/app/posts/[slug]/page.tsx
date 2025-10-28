@@ -2,7 +2,7 @@ export const runtime = "edge";
 
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { posts } from "v";
+import { posts } from "#site/content";
 import { TableOfContents } from "@/components/common";
 import Content from "@/components/common/Content";
 import { Badge } from "@/components/ui/badge";
