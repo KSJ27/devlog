@@ -19,6 +19,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+export async function generateStaticParams() {
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
 function getPostBySlug(slug: string) {
   return posts.find((post) => post.slug === slug);
 }

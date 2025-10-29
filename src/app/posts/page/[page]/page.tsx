@@ -9,6 +9,12 @@ type Props = {
   params: Promise<{ page: string }>;
 };
 
+export async function generateStaticParams() {
+  const totalPages = getTotalPages(posts.length, PAGE_SIZE);
+  const arr = Array.from({ length: totalPages }, (_, i) => ({ page: String(i + 1) }));
+  return arr;
+}
+
 export default async function Posts({ params }: Props) {
   const currentPage = Number((await params).page) || 1;
   const totalPages = getTotalPages(posts.length, PAGE_SIZE);
@@ -23,7 +29,11 @@ export default async function Posts({ params }: Props) {
           <PostCard key={post.slug} post={post} />
         ))}
       </ul>
-      <Pagination current={currentPage} total={totalPages} basePath="/posts/page" />
+      <Pagination
+        current={currentPage}
+        total={totalPages}
+        basePath="/posts/page"
+      />
     </main>
   );
 }
