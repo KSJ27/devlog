@@ -57,7 +57,7 @@ export default defineConfig({
           const cleanedTags = (data.tags ?? [])
             .map((t) => String(t).trim().toLowerCase())
             .filter(Boolean);
-          const uniqueTags = Array.from(new Set(cleanedTags));
+          const uniqueTags = Array.from(new Set(cleanedTags)).sort();
 
           return {
             ...data,
