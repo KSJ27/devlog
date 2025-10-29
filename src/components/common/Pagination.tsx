@@ -1,3 +1,9 @@
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from "lucide-react";
 import Link from "next/link";
 
 export function Pagination({
@@ -13,67 +19,60 @@ export function Pagination({
 
   const prev = current > 1 ? current - 1 : null;
   const next = current < total ? current + 1 : null;
+  const pathOf = (p: number) => `${basePath}/${p}`;
 
-  const pathOf = (p: number) =>
-    p === 1 ? `${basePath}/1` : `${basePath}/${p}`;
-
-  // 간단한 페이지 번호(최대 5개 예시)
-  const pad = 2;
-  const start = Math.max(1, current - pad);
-  const end = Math.min(total, current + pad);
-  const pages = Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  const pad = 5;
+  const start = 5 * Math.floor((current - 1) / pad) + 1;
+  const pages = Array.from(
+    { length: start + pad > total ? total % pad : pad },
+    (_, i) => start + i,
+  );
 
   return (
     <nav className="mt-8 flex items-center justify-center gap-2 text-sm">
       <Link
+        href={current !== 1 ? pathOf(1) : "#"}
+        aria-disabled={!prev}
+        aria-label="첫 페이지로 이동"
+        className={`flex size-8 items-center justify-center rounded border ${current !== 1 ? "hover:bg-muted" : "pointer-events-none opacity-50"}`}
+      >
+        <ChevronsLeft size={16} />
+      </Link>
+      <Link
         href={prev ? pathOf(prev) : "#"}
         aria-disabled={!prev}
-        className={`rounded border px-3 py-1 ${prev ? "hover:bg-muted" : "pointer-events-none opacity-50"}`}
+        aria-label="이전 페이지로 이동"
+        className={`flex size-8 items-center justify-center rounded border ${prev ? "hover:bg-muted" : "pointer-events-none opacity-50"}`}
       >
-        Prev
+        <ChevronLeft size={16} />
       </Link>
-
-      {start > 1 && (
-        <>
-          <Link
-            href={pathOf(1)}
-            className="rounded border px-3 py-1 hover:bg-muted"
-          >
-            1
-          </Link>
-          {start > 2 && <span className="px-1">…</span>}
-        </>
-      )}
 
       {pages.map((p) => (
         <Link
           key={p}
           href={pathOf(p)}
           aria-current={p === current ? "page" : undefined}
-          className={`rounded border px-3 py-1 ${p === current ? "bg-primary text-primary-foreground" : "hover:bg-muted"}`}
+          className={`flex size-8 items-center justify-center rounded border ${p === current ? "bg-primary text-primary-foreground" : "hover:bg-muted"}`}
         >
           {p}
         </Link>
       ))}
 
-      {end < total && (
-        <>
-          {end < total - 1 && <span className="px-1">…</span>}
-          <Link
-            href={pathOf(total)}
-            className="rounded border px-3 py-1 hover:bg-muted"
-          >
-            {total}
-          </Link>
-        </>
-      )}
-
       <Link
         href={next ? pathOf(next) : "#"}
         aria-disabled={!next}
-        className={`rounded border px-3 py-1 ${next ? "hover:bg-muted" : "pointer-events-none opacity-50"}`}
+        aria-label="다음 페이지로 이동"
+        className={`flex size-8 items-center justify-center rounded border ${next ? "hover:bg-muted" : "pointer-events-none opacity-50"}`}
       >
-        Next
+        <ChevronRight size={16} />
+      </Link>
+      <Link
+        href={current !== total ? pathOf(total) : "#"}
+        aria-disabled={!next}
+        aria-label="마지막 페이지로 이동"
+        className={`flex size-8 items-center justify-center rounded border ${current !== total ? "hover:bg-muted" : "pointer-events-none opacity-50"}`}
+      >
+        <ChevronsRight size={16} />
       </Link>
     </nav>
   );

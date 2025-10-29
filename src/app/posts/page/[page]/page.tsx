@@ -4,6 +4,7 @@ import { PostCard } from "@/components/common/PostCard";
 import { getPageSlice, getTotalPages, PAGE_SIZE } from "@/lib/paginate";
 
 export const dynamic = "force-static";
+export const dynamicParams = false;
 
 type Props = {
   params: Promise<{ page: string }>;
@@ -11,7 +12,9 @@ type Props = {
 
 export async function generateStaticParams() {
   const totalPages = getTotalPages(posts.length, PAGE_SIZE);
-  const arr = Array.from({ length: totalPages }, (_, i) => ({ page: String(i + 1) }));
+  const arr = Array.from({ length: totalPages }, (_, i) => ({
+    page: String(i + 1),
+  }));
   return arr;
 }
 

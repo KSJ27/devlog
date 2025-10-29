@@ -35,12 +35,14 @@ function PostCard({ post }: { post: Post }) {
                     </li>
                   ))}
                   {tags.length > 3 && (
-                    <Badge
-                      variant="outline"
-                      className="select-none bg-secondary"
-                    >
-                      +{tags.length - 3}
-                    </Badge>
+                    <li>
+                      <Badge
+                        variant="outline"
+                        className="select-none bg-secondary"
+                      >
+                        +{tags.length - 3}
+                      </Badge>
+                    </li>
                   )}
                 </ul>
               </div>
