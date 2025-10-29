@@ -8,7 +8,15 @@ if (!process.env.VELITE_STARTED && (isDev || isBuild)) {
 }
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return [
+      {
+        source: '/posts',
+        destination: '/posts/page/1',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
