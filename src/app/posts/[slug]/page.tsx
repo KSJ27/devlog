@@ -30,7 +30,7 @@ export default async function Post({ params }: Props) {
   if (post == null) notFound();
 
   return (
-    <main className="container relative my-8">
+    <main className="container relative my-10">
       <article className="w-full">
         <h1 className="font-bold text-3xl">{post.title}</h1>
         <p className="mt-2 text-muted-foreground">

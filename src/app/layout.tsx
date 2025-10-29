@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { AppHeader } from "@/components/common";
+import AppFooter from "@/components/common/AppFooter";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 export const metadata: Metadata = {
@@ -24,6 +25,7 @@ export default function RootLayout({
         >
           <AppHeader />
           {children}
+          <AppFooter />
         </ThemeProvider>
       </body>
     </html>
