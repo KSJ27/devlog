@@ -18,10 +18,22 @@ export default function Giscus() {
     scriptElem.async = true;
     scriptElem.crossOrigin = "anonymous";
 
-    scriptElem.setAttribute("data-repo", process.env.NEXT_PUBLIC_GISCUS_REPO as string);
-    scriptElem.setAttribute("data-repo-id", process.env.NEXT_PUBLIC_GISCUS_REPO_ID as string);
-    scriptElem.setAttribute("data-category", process.env.NEXT_PUBLIC_GISCUS_CATEGORY as string);
-    scriptElem.setAttribute("data-category-id", process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID as string);
+    scriptElem.setAttribute(
+      "data-repo",
+      process.env.NEXT_PUBLIC_GISCUS_REPO as string,
+    );
+    scriptElem.setAttribute(
+      "data-repo-id",
+      process.env.NEXT_PUBLIC_GISCUS_REPO_ID as string,
+    );
+    scriptElem.setAttribute(
+      "data-category",
+      process.env.NEXT_PUBLIC_GISCUS_CATEGORY as string,
+    );
+    scriptElem.setAttribute(
+      "data-category-id",
+      process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID as string,
+    );
     scriptElem.setAttribute("data-mapping", "pathname");
     scriptElem.setAttribute("data-strict", "0");
     scriptElem.setAttribute("data-reactions-enabled", "1");
@@ -44,5 +56,5 @@ export default function Giscus() {
     );
   }, [theme]);
 
-  return <section ref={ref} />;
+  return <section ref={ref} className="mt-10" />;
 }

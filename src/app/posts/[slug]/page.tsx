@@ -1,5 +1,6 @@
-export const runtime = "edge";
+// export const runtime = "edge";
 
+import { Calendar, Clock } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { posts } from "#site/content";
@@ -40,10 +41,7 @@ export default async function Post({ params }: Props) {
     <main className="container relative my-10">
       <article className="w-full">
         <h1 className="font-bold text-3xl">{post.title}</h1>
-        <p className="mt-2 text-muted-foreground">
-          {new Date(post.date).toLocaleDateString("ko-KR")}
-        </p>
-        <ul className="mt-2 flex flex-wrap items-center gap-2">
+        <ul className="mt-5 flex flex-wrap items-center gap-2">
           {post.tags.map((tag) => (
             <li key={tag}>
               <Badge variant="outline" className="select-none bg-secondary">
@@ -52,6 +50,23 @@ export default async function Post({ params }: Props) {
             </li>
           ))}
         </ul>
+        <div className="mt-3 flex flex-wrap items-center gap-4 text-muted-foreground text-sm">
+          <div className="flex items-center gap-1">
+            <Calendar size={14} className="shrink-0" />
+            <span>
+              {new Date(post.date).toLocaleDateString("ko-KR", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-1">
+            <Clock size={14} className="shrink-0" />
+            <span>{post.metadata.readingTime}분</span>
+          </div>
+        </div>
         <Content content={post.content} />
         <Giscus />
       </article>
