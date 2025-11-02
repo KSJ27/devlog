@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { posts } from "#site/content";
 import { TableOfContents } from "@/components/common";
 import Content from "@/components/common/Content";
+import Giscus from "@/components/common/Giscus";
 import { Badge } from "@/components/ui/badge";
 
 type Props = {
@@ -52,6 +53,7 @@ export default async function Post({ params }: Props) {
           ))}
         </ul>
         <Content content={post.content} />
+        <Giscus />
       </article>
       <aside className="-right-70 pointer-events-none absolute inset-y-0 top-0 hidden xl:block">
         <div className="pointer-events-auto sticky top-23 w-60">
