@@ -15,6 +15,12 @@ const nextConfig: NextConfig = {
         destination: "/posts/page/1",
         permanent: true,
       },
+      {
+        /* TODO: "/" 페이지 만들기 */
+        source: "/",
+        destination: "/posts/page/1",
+        permanent: true,
+      },
     ];
   },
 };
