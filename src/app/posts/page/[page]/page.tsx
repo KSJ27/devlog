@@ -28,7 +28,7 @@ export default async function Posts({ params }: Props) {
 
   return (
     <main className="container my-6">
-      <ul className="flex flex-col divide-y divide-border">
+      <ul className="flex flex-col gap-4 divide-y divide-border">
         {pagePosts.map((post) => (
           <PostCard key={post.slug} post={post} />
         ))}
