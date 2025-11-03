@@ -2,6 +2,7 @@ import { posts } from "#site/content";
 import { Pagination } from "@/components/common/Pagination";
 import { PostCard } from "@/components/common/PostCard";
 import { getPageSlice, getTotalPages, PAGE_SIZE } from "@/lib/paginate";
+import { postsSortedByDate } from "@/lib/posts";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -20,10 +21,10 @@ export async function generateStaticParams() {
 
 export default async function Posts({ params }: Props) {
   const currentPage = Number((await params).page) || 1;
-  const totalPages = getTotalPages(posts.length, PAGE_SIZE);
+  const totalPages = getTotalPages(postsSortedByDate.length, PAGE_SIZE);
 
   const { start, end } = getPageSlice(currentPage, PAGE_SIZE);
-  const pagePosts = posts.slice(start, end);
+  const pagePosts = postsSortedByDate.slice(start, end);
 
   return (
     <main className="container my-6">
