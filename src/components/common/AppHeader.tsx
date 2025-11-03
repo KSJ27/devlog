@@ -1,7 +1,7 @@
 import Link from "next/link";
 import ModeToggle from "./ModeToggle";
 
-function AppHeader() {
+export default function AppHeader() {
   return (
     <header className="sticky top-0 z-10 flex h-13 w-full items-center justify-center border-b bg-background">
       <div className="flex h-full w-full max-w-5xl items-center justify-between gap-8 px-4">
@@ -31,5 +31,3 @@ function AppHeader() {
     </header>
   );
 }
-
-export { AppHeader };
