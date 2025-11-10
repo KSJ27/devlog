@@ -20,19 +20,19 @@ export default function Giscus() {
 
     scriptElem.setAttribute(
       "data-repo",
-      process.env.NEXT_PUBLIC_GISCUS_REPO as string,
+      process.env.NEXT_PUBLIC_GISCUS_REPO as string
     );
     scriptElem.setAttribute(
       "data-repo-id",
-      process.env.NEXT_PUBLIC_GISCUS_REPO_ID as string,
+      process.env.NEXT_PUBLIC_GISCUS_REPO_ID as string
     );
     scriptElem.setAttribute(
       "data-category",
-      process.env.NEXT_PUBLIC_GISCUS_CATEGORY as string,
+      process.env.NEXT_PUBLIC_GISCUS_CATEGORY as string
     );
     scriptElem.setAttribute(
       "data-category-id",
-      process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID as string,
+      process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID as string
     );
     scriptElem.setAttribute("data-mapping", "pathname");
     scriptElem.setAttribute("data-strict", "0");
@@ -48,13 +48,13 @@ export default function Giscus() {
   // https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md#isetconfigmessage
   useEffect(() => {
     const iframe = document.querySelector<HTMLIFrameElement>(
-      "iframe.giscus-frame",
+      "iframe.giscus-frame"
     );
     iframe?.contentWindow?.postMessage(
       { giscus: { setConfig: { theme } } },
-      "https://giscus.app",
+      "https://giscus.app"
     );
   }, [theme]);
 
-  return <section ref={ref} className="mt-10" />;
+  return <section ref={ref} className="mt-10 w-full" />;
 }
