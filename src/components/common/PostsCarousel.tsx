@@ -14,14 +14,14 @@ import { postsSortedByDate } from "@/lib/posts";
 
 export default function PostsCarousel() {
   return (
-    <Carousel opts={{ loop: true }}  className="w-full">
+    <Carousel opts={{ loop: true }} className="w-full">
       <CarouselContent>
         {postsSortedByDate.slice(0, 5).map((post) => (
-          <CarouselItem
-            key={post.slug}
-          >
-            <Link href={post.permalink}             className="group relative flex cursor-pointer flex-col items-center justify-center rounded-2xl bg-card hover:cursor-pointer hover:bg-accent hover:text-accent-foreground"
->
+          <CarouselItem key={post.slug}>
+            <Link
+              href={post.permalink}
+              className="group relative flex cursor-pointer flex-col items-center justify-center rounded-2xl bg-card hover:cursor-pointer hover:bg-accent hover:text-accent-foreground"
+            >
               {post.cover ? (
                 <Image
                   src={post.cover}
