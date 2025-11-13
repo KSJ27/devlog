@@ -8,6 +8,9 @@ if (!process.env.VELITE_STARTED && (isDev || isBuild)) {
 }
 
 const nextConfig: NextConfig = {
+  webpack: (config) => {
+    return config;
+  },
   async redirects() {
     return [
       {

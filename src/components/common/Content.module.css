@@ -187,29 +187,25 @@
   font-size: 0.875rem /* 14px */;
   font-weight: 400;
   line-height: 1.25rem;
+}
 
-  [data-rehype-pretty-code-title] {
-    color: var(--muted-foreground);
-    background-color: var(--muted);
-    border-bottom: 1px solid var(--border);
-    padding: 0.25rem 0.875rem;
-  }
+.root [data-rehype-pretty-code-title] {
+  color: var(--muted-foreground);
+  background-color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  padding: 0.25rem 0.875rem;
+}
 
-  [data-rehype-pretty-code-caption] {
-    color: var(--muted-foreground);
-    background-color: var(--muted);
-    border-top: 1px solid var(--border);
-    padding: 0.25rem 0.875rem;
-  }
+.root [data-rehype-pretty-code-caption] {
+  color: var(--muted-foreground);
+  background-color: var(--muted);
+  border-top: 1px solid var(--border);
+  padding: 0.25rem 0.875rem;
+}
 
-  pre {
-    background-color: var(--color-secondary);
-    margin: 0;
-    padding: 0.875rem;
-    overflow: auto;
-  }
-
-  /* pre code {
-    overflow: auto;
-  } */
+.root figure[data-rehype-pretty-code-figure] pre {
+  background-color: var(--color-secondary);
+  margin: 0;
+  padding: 0.875rem;
+  overflow: auto;
 }

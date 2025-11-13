@@ -2,7 +2,7 @@
 title: TailwindCSS를 직접 만들어보고 동작 원리 이해하기
 slug: understand-tailwindcss-with-mini-project
 date: 2025-11-06 22:00
-cover: cover.png
+cover: tailwind.png
 tags: [css]
 ---
 
