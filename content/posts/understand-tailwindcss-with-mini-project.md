@@ -109,7 +109,7 @@ TailwindCSS 팀은 클래스를 찾을 때 소스 코드를 코드가 아닌 평
 
 1. 파일 스캔: 프로젝트 내 모든 소스 파일(JSX, HTML 등)을 찾아 읽음
 2. 클래스 추출: 각 파일에서 className 속성에 사용된 클래스명을 추출
-3. CSS 생성: 추출된 클래스명을 CSS 규칙으로 변환
+3. CSS 규칙 변환: 추출된 클래스명을 CSS 규칙으로 변환
 4. 최종 CSS 생성: 생성된 CSS를 하나의 파일로 결합
 
 ### 1. 파일 스캔
@@ -124,21 +124,24 @@ import { readFileSync } from "fs";
 const files = await glob(["./src/**/*.{js,jsx,ts,tsx}"]);
 
 processFiles(files) {
-  // 2. 클래스 추출하기
+  // 2. 클래스 추출
   const allClasses = extractClassesFromFiles(files);
 
-  // 3. 클래스를 CSS로 변환하기
+  // 3. 클래스를 CSS로 변환
   const cssRules = generateCSSRules(allClasses);
 
-  // 4. 최종 CSS 반환
+  // 4. 최종 CSS 생성
   return combineCSS(cssRules);
 }
 ```
 
+위 코드는 프로젝트 루트에서 `src` 하위의 JavaScript/TypeScript 계열 파일을 전부 찾는 예시입니다.
+`fast-glob`로 파일 목록을 얻은 뒤 각 파일을 읽어 클래스 추출 → CSS 생성 → 결합 순으로 처리합니다.
+
 ### 2. 클래스 추출하기
 
 파일에서 읽어온 문자열(content) 안에서 class="..." 또는 className="..." 형태를 찾아내고,
-그 안에 포함된 개별 유틸리티 클래스 후보들을 분리하여 배열로 반환합니다
+그 안에 포함된 개별 유틸리티 클래스 후보들을 분리하여 배열로 반환합니다.
 
 ```javascript
 function extractClassesFromFiles(files) {
@@ -171,6 +174,12 @@ function extractClasses(content) {
   return Array.from(classes);
 }
 ```
+
+위 함수들은 파일 텍스트에서 클래스 문자열을 정규식으로 찾아 개별 토큰
+(유틸리티 클래스)으로 분리합니다.
+단점은 동적 조합(`className={cond ? 'a' : 'b'}`) 같은 케이스를 완벽히 처리하기 어렵다는 점입니다.
+실제로 TailwindCSS 역시 클래스명을 동적으로 조합해 작성하지 않도록 경고하고 있습니다.
+([출처](https://tailwindcss.com/docs/detecting-classes-in-source-files#dynamic-class-names))
 
 ### 3. 클래스를 CSS로 변환하기
 
@@ -228,7 +237,23 @@ function generateCSSRules(classes) {
   return cssRules;
 }
 
+이 부분은 추출된 클래스명을 구문 분석해서 실제 CSS 규칙으로 바꿉니다. 예시에서는 margin 계열(`m-...`, `mx-...`,
+ `mt-...` 등)만 대응하도록 구현했습니다.
 ```
+
+주의할 점：
+
+- 클래스 이름의 이스케이프: CSS 선택자에서 콜론(`:`) 등 문자를 그대로
+  쓰려면 `\\:`처럼 이스케이프해야 합니다. 예제에서도 이를 처리하고
+  있습니다.
+- 패턴 우선순위: `m-2`와 `mx-2`처럼 중복되는 패턴이 있을 때 적용
+  우선순위를 정해야 합니다.
+- 확장성: 색상, 폰트, 레이아웃 유틸 등 다양한 유틸리티를 추가하려면
+  패턴 매칭 구조를 모듈화(유틸리티별 핸들러)하는 것이 좋습니다.
+
+  또한 실제 Tailwind처럼 변형(variants) — `sm:`, `hover:`, `dark:` 등 — 을
+  지원하려면 접두사 처리와 미디어쿼리/상태별 래핑을 생성하는 추가 로직이
+  필요합니다.
 
 ### 4. 최종 CSS 파일 생성
 
@@ -237,10 +262,16 @@ const generatedCSS = cssRules.join("\n\n");
 fs.writeFileSync("path/my-tailwind.css", generatedCSS);
 ```
 
+마지막으로 생성된 규칙들을 하나의 CSS 파일로 합쳐서 출력합니다。
+
+실전에서는 파일 경로를 프로젝트 빌드 출력 디렉터리(예: `dist` 또는
+`public`)로 지정하고, 소스맵이나 해시 파일명(캐시 제어)를 추가하는 것이
+일반적입니다.
+
 ## 마무리
 
 이 글에서는 단순한 버전의 Tailwind를 직접 만들어보며 TailwindCSS가 내부적으로 어떻게 동작하는지 알아보았습니다.
 
-구현한 코드가 실제로 동작하는지 아래에서 확인 가능합니다.
-
-<https://codesandbox.io/p/github/KSJ27/mini-tailwind/main?autofocus=0&embed=1&showConsole=true>
+Vite + React 환경에서 동작할 수 있도록 구현한 코드를
+[Code Sandbox](https://codesandbox.io/p/github/KSJ27/mini-tailwind/main?autofocus=0&embed=1&showConsole=true)에서
+확인 하실 수 있습니다.
